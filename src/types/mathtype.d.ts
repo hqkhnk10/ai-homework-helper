@@ -1,3 +1,6 @@
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+
 // This declaration file tells TypeScript about the module's structure
 declare module '@wiris/mathtype-ckeditor5/dist/index.js' {
   const MathType: any;
