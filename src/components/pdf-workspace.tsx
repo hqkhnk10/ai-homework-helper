@@ -2,8 +2,14 @@
 
 import { useState, useRef } from 'react';
 import { ZoomIn, ZoomOut, Search, ChevronLeft, ChevronRight } from 'lucide-react';
-import { PDFViewer } from './pdf-viewer';
 import { ChatInterface } from './chat-interface';
+
+import dynamic from 'next/dynamic';
+
+// Dynamically import the PdfViewer component, disabling server-side rendering
+const PdfViewer = dynamic(() => import('./pdf-viewer'), {
+  ssr: false,
+});
 
 interface PDFWorkspaceProps {
     files: File[];
@@ -47,7 +53,7 @@ export function PDFWorkspace({ files, onGetAnswer, showChat = false, initialText
                 {/* PDF View */}
                 <div className="flex-1 overflow-hidden flex justify-center items-center relative">
                     {selectedFile && (
-                        <PDFViewer
+                        <PdfViewer
                             file={selectedFile}
                             page={currentPage}
                             zoom={zoom}

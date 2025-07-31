@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, Bold, Italic, List, ListProperties ,Table ,TableToolbar ,Image,ImageUpload   } from 'ckeditor5';
 import { MainLayout } from './layout/main-layout';
@@ -8,53 +8,33 @@ import { Workspace } from './workspace';
 import MathType from '@wiris/mathtype-ckeditor5/dist/index.js';
 
 import 'ckeditor5/ckeditor5.css';
-type Editor = {
-    getData: () => string;
-};
+import dynamic from 'next/dynamic';
 
-interface DataTransferItem {
-    kind: string;
-    type: string;
-    getAsFile: () => File | null;
-}
-
-const editorConfiguration = {
-    licenseKey: 'GPL',
-    toolbar: [
-        'heading',
-        '|',
-        'bold',
-        'italic',
-        'link',
-        'bulletedList',
-        'numberedList',
-        '|',
-        'outdent',
-        'indent',
-        '|',
-        'blockQuote',
-        'insertTable',
-        'mathType',
-        'chemType',
-        'undo',
-        'redo'
-    ],
-    mathType: {
-        engine: 'mathjax',
-        outputType: 'script',
-        forceOutputType: true,
-        enablePreview: true
-    }
-};
+// Dynamically import the PdfViewer component, disabling server-side rendering
+const CKEditorComponent = dynamic(() => import('./ckeditor/editor'), {
+  ssr: false,
+});
 
 export function NewChatScreen() {
     const [isDragging, setIsDragging] = useState(false);
-    const [editorData, setEditorData] = useState('');
     const [files, setFiles] = useState<File[]>([]);
     const [showWorkspace, setShowWorkspace] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [isUploading, setIsUploading] = useState(false);
+    const [editorLoaded, setEditorLoaded] = useState(false);
+    const [editorContent, setEditorContent] = useState(''); // State to hold CKEditor content
 
+    useEffect(() => {
+        setEditorLoaded(true);
+    }, []);
+
+    // Callback function to receive data from CKEditorComponent
+    const handleEditorChange = (data: string) => {
+        setEditorContent(data); // Update the state with the new content
+        console.log('Received editor content in parent:', data);
+        // You can now do anything with 'data', e.g., send it to an API, save to local storage, etc.
+    };
+    
     const handleDragOver = (e: React.DragEvent) => {
         e.preventDefault();
         setIsDragging(true);
@@ -117,7 +97,7 @@ export function NewChatScreen() {
     return (
         <MainLayout>
             {showWorkspace ? (
-                <Workspace initialFiles={files} initialText={editorData} />
+                <Workspace initialFiles={files} initialText={editorContent} />
             ) : (
                 <div className="flex-1 flex flex-col items-center justify-center p-8">
                     {/* Header */}
@@ -196,48 +176,13 @@ export function NewChatScreen() {
             {/* Rich Text Editor */}
             <div className="w-[80%] relative border-2 border-dotted border-gray-300">
                 <div className="max-h-[500px] overflow-y-auto">
-                    <CKEditor
-                        editor={ClassicEditor}
-                        config={{
-                            licenseKey: 'GPL',
-                            plugins: [Essentials, Paragraph, Bold, Italic, MathType, List, ListProperties, Table, TableToolbar, Image, ImageUpload],
-                            toolbar: {
-                                items: [
-                                    'numberedList',
-                                    'bulletedList',
-                                    '|',
-                                    'insertTable',
-                                    'imageUpload',
-                                    'MathType',
-                                    '|',
-                                    'undo',
-                                    'redo'
-                                ],
-                                shouldNotGroupWhenFull: true
-                            },
-                            list: {
-                                properties: {
-                                    styles: true,
-                                    startIndex: true,
-                                    reversed: true
-                                }
-                            },
-                            placeholder: 'Type your question here...',
-                        }}
-                        onChange={(event, editor) => {
-                            const data = editor.getData();
-                            setEditorData(data);
-                        }}
-                    />
+                    <CKEditorComponent onChange={handleEditorChange} />
                 </div>
 
                 <button
                     className="h-[36px] absolute bottom-2 right-4 bg-black text-white px-6 py-2 rounded-[16px] font-medium hover:bg-gray-800 transition-colors"
                     onClick={() => {
-                        // Only set show workspace if we have files or editor content
-                        if (files.length > 0 || editorData.trim()) {
-                            setShowWorkspace(true);
-                        }
+                        setShowWorkspace(true);
                     }}
                 >
                     Get answer

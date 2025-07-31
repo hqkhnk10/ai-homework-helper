@@ -16,7 +16,7 @@ interface PDFViewerProps {
   onCropComplete?: (croppedFile: File) => void;
 }
 
-export function PDFViewer({ file, page = 1, zoom = 100, onPageChange, onCropComplete }: PDFViewerProps) {
+export default function PDFViewer({ file, page = 1, zoom = 100, onPageChange, onCropComplete }: PDFViewerProps) {
   const [numPages, setNumPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [scale, setScale] = useState(1.0);
