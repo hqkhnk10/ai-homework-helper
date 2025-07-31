@@ -1,0 +1,45 @@
+{
+  "name": "ai-homework-helper",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-react": "^11.0.0",
+    "@radix-ui/react-avatar": "^1.1.10",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@tanstack/react-query": "^5.83.0",
+    "@types/dompurify": "^3.2.0",
+    "@types/react-pdf": "^7.0.0",
+    "@wiris/mathtype-ckeditor5": "^8.13.3",
+    "axios": "^1.11.0",
+    "ckeditor5-premium-features": "^46.0.0",
+    "clsx": "^2.1.1",
+    "dompurify": "^3.2.6",
+    "html2canvas": "^1.4.1",
+    "lucide-react": "^0.533.0",
+    "next": "15.4.4",
+    "pdfjs-dist": "^5.3.31",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-image-crop": "^11.0.10",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.4.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
