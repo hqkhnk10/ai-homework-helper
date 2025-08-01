@@ -1,4 +1,5 @@
-if (!Promise.withResolvers) {
+// polyfills.ts (chỉ chạy trên client)
+if (typeof window !== 'undefined' && typeof Promise.withResolvers !== 'function') {
   Promise.withResolvers = function<T>() {
     let resolve!: (value: T | PromiseLike<T>) => void;
     let reject!: (reason?: any) => void;

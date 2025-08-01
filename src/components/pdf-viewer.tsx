@@ -3,6 +3,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { Crop, ZoomIn, ZoomOut, ChevronLeft, ChevronRight } from 'lucide-react';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import "../utils/promise-polyfill";
 
 // Set up PDF.js worker properly
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
