@@ -253,6 +253,8 @@ export default function PDFViewer({ file, page = 1, zoom = 100, onPageChange, on
               <Page
                 pageNumber={currentPage}
                 scale={scale}
+                renderTextLayer={false}
+                renderAnnotationLayer={false}
                 loading={
                   <div className="flex items-center justify-center h-96">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
