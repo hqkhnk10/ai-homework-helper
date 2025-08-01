@@ -18,6 +18,7 @@
     "@types/react-pdf": "^7.0.0",
     "@wiris/mathtype-ckeditor5": "^8.13.3",
     "axios": "^1.11.0",
+    "canvas": "^3.1.2",
     "ckeditor5-premium-features": "^46.0.0",
     "clsx": "^2.1.1",
     "dompurify": "^3.2.6",
